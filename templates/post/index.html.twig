@@ -1,0 +1,42 @@
+{% extends('base.html.twig') %}
+
+{% block title %}Symfony Course - Posts!{% endblock %}
+
+{% block body %}
+    <div id="pageNotice" class="alert alert-success"></div>
+    <h2>List of all posts</h2>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <td>ID</td>
+                <td>Title</td>
+                <td>Actions</td>
+            </tr>
+        </thead>
+        <tbody>
+            {% for post in posts %}
+                <tr id="pRow{{ post.id }}">
+                    <td>{{ post.id }}</td>
+                    <td>
+                        <a href="{{ path('post.show', {id: post.id}) }}">
+                            {{ post.title }}
+                        </a>
+                    </td>
+                    <td>
+                        <button class="remove-button" type="button" data-id="{{ post.id }}">Remove</button>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    {{ encore_entry_link_tags('posts') }}
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {{ encore_entry_script_tags('posts') }}
+{% endblock %}

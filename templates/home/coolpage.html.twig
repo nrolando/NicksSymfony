@@ -1,0 +1,12 @@
+{% extends('base.html.twig') %}
+
+{% block body %}
+    <h1>Welcome {{ name }}</h1>
+    <p id="msg">Initial message</p>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {{ encore_entry_script_tags('coolpage') }}
+{% endblock %}
+

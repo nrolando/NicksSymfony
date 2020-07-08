@@ -1,0 +1,15 @@
+@import "~bootstrap/scss/bootstrap";
+
+body {
+    background-color: lightgray;
+}
+
+div.my-navbar {
+    ul {
+        list-style: none;
+        text-align: right;
+    }
+    ul > li {
+        display: inline-block;
+    }
+}
