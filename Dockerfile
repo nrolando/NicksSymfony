@@ -36,10 +36,16 @@ RUN tmp=$(mktemp); \
     echo "            Require all granted" >> $tmp; \
     echo "        </Directory>" >> $tmp; \
     tail -n +13 $def >> $tmp; \
-    cat $tmp > $def;
+    cat $tmp > $def; \
+    sed -i "s^DocumentRoot /var/www/html^DocumentRoot /var/www/html/public^g" /etc/apache2/sites-enabled/000-default.conf;
 
 # Doing copy web files here after apache stuff
-COPY assets bin config migrations src templates /var/www/html/
+COPY assets /var/www/html/assets/
+COPY bin /var/www/html/bin/
+COPY config /var/www/html/config/
+COPY migrations /var/www/html/migrations/
+COPY src /var/www/html/src/
+COPY templates /var/www/html/templates/
 COPY .env .gitignore composer.* Dockerfile LICENSE package.json sfcourse_bu.sql symfony.lock webpack.config.js yarn.lock /var/www/html/
 COPY public/.htaccess public/index.php /var/www/html/public/
 
@@ -59,14 +65,21 @@ RUN apt-get install -y software-properties-common zip; \
     sed -i "s^max_execution_time = 30^max_execution_time = 300^g" /etc/php/7.3/apache2/php.ini;
 
 # Install MySQL Server. Create user, password, database. Restore db from backup file.
-RUN apt-get install -y mariadb-server mariadb-client; \
-    sed -i "s^bind-address		= 127.0.0.1^bind-address = 0.0.0.0^g" /etc/mysql/mariadb.conf.d/50-server.cnf; \
+RUN apt-get install -y mysql-server mysql-client; \
+    sed -i "s^bind-address		= 127.0.0.1^bind-address = 0.0.0.0^g" /etc/mysql/mysql.conf.d/mysqld.cnf; \
     service mysql start; \
     mysql -e "CREATE USER 'sfcourse_user'@'%' IDENTIFIED BY 'easypw123';"; \
     mysql -e "CREATE DATABASE sfcourse;"; \
     mysql -e "GRANT ALL PRIVILEGES ON sfcourse.* TO 'sfcourse_user'@'%';"; \
     mysql -e "FLUSH PRIVILEGES;"; \
 	mysql -u root sfcourse < /var/www/html/sfcourse_bu.sql;
+
+# Install NodeJS and Yarn
+RUN curl -fsSL https://deb.nodesource.com/setup_12.x | sudo -E bash -; \
+    echo "deb https://dl.yarnpkg.com/debian/ stable main" | sudo tee /etc/apt/sources.list.d/yarn.list; \
+    curl -fsSL https://dl.yarnpkg.com/debian/pubkey.gpg | sudo apt-key add -; \
+    apt-get update -y; \
+    apt-get install -y nodejs yarn;
 
 # Create web-user and add to group www-data, and set permssions
 RUN useradd -d /home/web-user -m web-user -p easypw123; \
@@ -76,6 +89,12 @@ RUN useradd -d /home/web-user -m web-user -p easypw123; \
 	# which the 2nd semi-colon does. https://stackoverflow.com/questions/19737525/find-type-f-exec-chmod-644
 	find /var/www/html/ -type f -exec chmod 644 {} \;; \
 	find /var/www/html/ -type d -exec chmod 755 {} \;;
+
+WORKDIR /var/www/html
+
+RUN composer install --no-interaction --no-dev --optimize-autoloader; \
+    yarn install --non-interactive; \
+    yarn run encore dev;
 
 EXPOSE 80 443 3306
 
