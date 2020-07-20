@@ -37,3 +37,8 @@ security:
     access_control:
         # - { path: ^/admin, roles: ROLE_ADMIN }
         # - { path: ^/profile, roles: ROLE_USER }
+
+        # To redirect when a logged in user accesses a page that only an anon user should have access to (e.g. /login), create
+        # an event listener on kernel.request and do so there. This next line will cause an ugly 403.
+        #- { path: ^/login, roles: IS_ANONYMOUS }
+        #- { path: ^/post/create, roles: IS_AUTHENTICATED_REMEMBERED }

@@ -4,7 +4,11 @@
 
 {% block body %}
     <div id="pageNotice" class="alert alert-success"></div>
-    <h2>List of all posts</h2>
+    <div class="subheader d-flex">
+        <h2 class="w-72">List of all posts</h2>
+        <!--<a class="create-link" href="{{ path('post.create') }}"><span class="plus-sign">+</span> <span>Create</span></a>-->
+        <a class="create-link" href="{{ path('post.create') }}">+ Create</a>
+    </div>
     <table class="table table-striped">
         <thead>
             <tr>
