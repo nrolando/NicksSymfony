@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Post;
 use App\Form\PostType;
 use App\Repository\PostRepository;
+use App\Services\FileUploader;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Request;
@@ -40,9 +41,10 @@ class PostController extends AbstractController
     /**
      * @Route("/create", name="create")
      * @param Request $request
+     * @param FileUploader $fu
      * @return Response
      */
-    public function create(Request $request) {
+    public function create(Request $request, FileUploader $fu) {
         // create a new post with title
         $post = new Post();
 
@@ -56,12 +58,7 @@ class PostController extends AbstractController
             /** @var UploadedFile $file */
             $file = $request->files->get('post')['attachment'];
             if($file) {
-                $filename = md5(uniqid()) . '.' . $file->getExtension();
-                $file->move(
-                    $this->getParameter('uploads_dir'),
-                    $filename
-                );
-
+                $filename = $fu->uploadFile($file);
                 $post->setImage($filename);
             }
             $em->persist($post);
@@ -85,7 +82,31 @@ class PostController extends AbstractController
     public function show($id, PostRepository $pr) {
         $post = $pr->find($id);
 
+        if(empty($post)) {
+            throw $this->createNotFoundException('This post does not exist.');
+        }
+
         return $this->render('post/show.html.twig', [
+            'post'  => $post
+        ]);
+    }
+
+    /**
+     * This is a view that demos how to get Post/Entity data using a custom method in the Post/Entity Repository class.
+     *
+     * @Route("/showalt/{id}", name="showalt")
+     * @param $id
+     * @param PostRepository $pr
+     * @return Response
+     */
+    public function showalt($id, PostRepository $pr) {
+        $post = $pr->findPostByIdAndIncludeCategoryData($id);
+
+        if(empty($post)) {
+            throw $this->createNotFoundException('This post does not exist.');
+        }
+
+        return $this->render('post/showalt.html.twig', [
             'post'  => $post
         ]);
     }

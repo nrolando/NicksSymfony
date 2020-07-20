@@ -4,5 +4,8 @@
 
 {% block body %}
     <h1>{{ post.title }}</h1>
-    <img class="mw-100" alt="Post Image" src="{{ '/uploads/' ~ post.image }}" />
+    <p>
+        <b>Category: </b><em>{{ post.category.name }}</em>
+    </p>
+    <img class="w-50 h-50" alt="Post Image" src="{{ '/uploads/' ~ post.image }}" />
 {% endblock %}

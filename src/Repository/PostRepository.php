@@ -19,6 +19,33 @@ class PostRepository extends ServiceEntityRepository
         parent::__construct($registry, Post::class);
     }
 
+    /**
+     * This custom method shows how to build your own query to fetch data in an Entity Repository class.
+     *
+     * @param int $id
+     * @return mixed|null
+     */
+    public function findPostByIdAndIncludeCategoryData(int $id) {
+        $qb = $this->createQueryBuilder('p');
+        $qb->select('p.title as post_title')
+            ->addSelect('p.id as post_id')
+            ->addSelect('p.image as post_image')
+            ->addSelect('c.name as cat_name')
+            ->addSelect('c.id as cat_id')
+            ->innerJoin('p.category', 'c')
+            ->where('p.id = :id')
+            ->setParameter('id', $id);
+
+        $res = $qb->getQuery()->getResult();
+
+        // If we have results, get the first result to return
+        if(count($res) > 0) {
+            return $res[0];
+        } else {
+            return null;
+        }
+    }
+
     // /**
     //  * @return Post[] Returns an array of Post objects
     //  */
