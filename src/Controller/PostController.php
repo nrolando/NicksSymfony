@@ -7,11 +7,14 @@ use App\Form\PostType;
 use App\Repository\PostRepository;
 use App\Services\FileUploader;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Form\Exception\RuntimeException;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Validator\Validation;
+use Symfony\Component\Validator\Constraints\File as FileValidator;
 
 /**
  * @Route("/post", name="post.")
@@ -39,6 +42,8 @@ class PostController extends AbstractController
     }
 
     /**
+     * App\Services\FileUploader is a custom Service class, modify as needed.
+     *
      * @Route("/create", name="create")
      * @param Request $request
      * @param FileUploader $fu
@@ -58,7 +63,38 @@ class PostController extends AbstractController
             /** @var UploadedFile $file */
             $file = $request->files->get('post')['attachment'];
             if($file) {
+                if($file->getError() === 1) {
+                    // This could be due to the file being larger than php_ini upload_max_filesize
+                    throw new RuntimeException("There was an error uploading your file.");
+                }
+
+                // Using Symfony Validator with File Constraints
+                $validator = Validation::createValidator();
+                $violations = $validator->validate($file,
+                    new FileValidator([
+                        'maxSize'   => '3M',
+                        'mimeTypes' => [
+                            'image/apng',
+                            'image/bmp',
+                            'image/gif',
+                            'image/x-icon',
+                            'image/jpeg',
+                            'image/png',
+                            'image/svg+xml',
+                            'image/tiff',
+                            'image/webp',
+                        ],
+                        'mimeTypesMessage' => 'Please upload a valid image file.'
+                    ])
+                );
+                if(count($violations) > 0) {
+                    throw new RuntimeException($violations[0]->getMessage());
+                }
+
                 $filename = $fu->uploadFile($file);
+                if(is_null($filename)) {
+                    throw new RuntimeException("Could not determine uploaded file extension");
+                }
                 $post->setImage($filename);
             }
             $em->persist($post);

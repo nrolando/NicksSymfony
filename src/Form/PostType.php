@@ -10,6 +10,7 @@ use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\File;
 
 class PostType extends AbstractType
 {
@@ -17,12 +18,15 @@ class PostType extends AbstractType
     {
         $builder
             ->add('title')
-            ->add('attachment', FileType::class, [
-                'mapped' => false
-            ])
             ->add('category', EntityType::class, [
-                'class' => Category::class,
-                'choice_label' => 'name'
+                'label'         => 'Category',
+                'class'         => Category::class,
+                'choice_label'  => 'name',
+                'placeholder'   => 'Choose an option'
+            ])
+            ->add('attachment', FileType::class, [
+                'mapped'    => false,
+                'required'  => false
             ])
             ->add('save', SubmitType::class, [
                 'attr' => [

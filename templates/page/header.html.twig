@@ -62,9 +62,12 @@
     if(l_routeMatches !== undefined && l_routeMatches !== null) {
         let routeRegex = '^' + l_routeMatches;
         $('ul.navbar-nav a').each(function (e) {
-            let aMatch = $(this).attr('data-path').match(routeRegex);
-            if (aMatch !== undefined && aMatch !== null) {
-                $(this).parent('li').addClass('active');
+            let aPath = $(this).attr('data-path');
+            if(aPath !== undefined && aPath !== null) {
+                let aMatch = aPath.match(routeRegex);
+                if (aMatch !== undefined && aMatch !== null) {
+                    $(this).parent('li').addClass('active');
+                }
             }
         });
     }

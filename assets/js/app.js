@@ -16,4 +16,18 @@ const $ = require('jquery');
 // create global $ and jQuery variables (https://symfony.com/doc/current/frontend/encore/legacy-applications.html)
 global.$ = global.jQuery = $;
 
-console.log('Hello Webpack Encore! Edit me in assets/js/app.js');
+//console.log('Hello Webpack Encore! Edit me in assets/js/app.js');
+
+$(document).ready(function() {
+    // This is how to work with input of type file and Bootstrap
+    // https://getbootstrap.com/docs/4.0/components/forms/#file-browser
+    // https://stackoverflow.com/questions/43250263/bootstrap-4-file-input
+    $('.custom-file-label').html("Choose file...");
+    $('.custom-file-input').on('change', function(e) {
+        let fname = e.target.files[0].name;
+        let nextSibling = e.target.nextElementSibling;
+        if(nextSibling.classList.contains('custom-file-label')) {
+            nextSibling.innerHTML = fname;
+        }
+    });
+});
