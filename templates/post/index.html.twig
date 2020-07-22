@@ -3,13 +3,14 @@
 {% block title %}Symfony Course - Posts!{% endblock %}
 
 {% block body %}
+    <!-- ### CONSIDER ADDING A SEARCH COMPONENT IN div.subheader TO FILTER POSTS BY TITLE AS USER TYPES!!! THAT'D BE SIC... ### -->
     <div id="pageNotice" class="alert alert-success"></div>
     <div class="subheader d-flex">
         <h2 class="w-72">List of all posts</h2>
         <!--<a class="create-link" href="{{ path('post.create') }}"><span class="plus-sign">+</span> <span>Create</span></a>-->
         <a class="create-link" href="{{ path('post.create') }}">+ Create</a>
     </div>
-    <table class="table table-striped">
+    <table class="table myTable table-striped">
         <thead>
             <tr>
                 <td>ID</td>

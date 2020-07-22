@@ -1,5 +1,35 @@
 {% extends('base.html.twig') %}
 
 {% block body %}
-    <h1>Welcome from Twig</h1>
+    <div>
+        <h1 class="text-center">Full Stack Web Development</h1>
+    </div>
+    <div class="row text-center mt-5 mx-lg-5">
+        <div class="col-sm col-2-text">
+            <p class="mb-xs-4">
+                Hello, my name is Nick Rolando, and welcome to my portfolio!
+            </p>
+            <div id="me1col">
+                <img class="w-80" alt="Nick Rolando Web Developer" src="{{ asset('build/images/LI_me_3.png') }}" />
+            </div>
+            <p class="mt-xs-4">
+                I am a self-motivated and
+                passionate web developer, and I absolute love all things computer programming. I have been doing web
+                development as a profession since 2010, and I endeavor to continuously grow in this fast-paced and ever-evolving
+                industry to empower businesses and bring people together in ways like never before.
+            </p>
+            <p>
+                The website you are visiting now is built with PHP and the Symfony framework and using a MySQL database. I
+                built the frontend with Twig, Bootstrap, jQuery and SASS. I also love Docker and have used it to build an image of this
+                site with all of its dependencies, and am using the image to host it on AWS! Please feel free to browse
+                around and check out some of the features.
+            </p>
+            <p>
+                Please <a href="{{ path('portfolio') }}">Click Here</a> to take a look at more of my skills and experience.
+            </p>
+        </div>
+        <div id="me2col" class="col-sm">
+            <img class="w-xxl-60 w-lg-80 w-sm-100" alt="Nick Rolando Web Developer" src="{{ asset('build/images/LI_me_3.png') }}" />
+        </div>
+    </div>
 {% endblock %}

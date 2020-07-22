@@ -2,6 +2,75 @@
 
 $subheaderHeight: 47px;
 
+// xs (defined by me :) anything smaller than bootstrap's "sm")
+@media (max-width: 575px) {
+    h1 {
+        font-size: 1.8rem;
+    }
+
+    #me2col {
+        display: none;
+    }
+
+    .mb-xs-4 {
+        margin-bottom: 1.5rem;
+    }
+    .mt-xs-4 {
+        margin-top: 1.5rem;
+    }
+    .my-xs-4 {
+        margin-top: 1.5rem;
+        margin-bottom: 1.5rem;
+    }
+}
+// sm (as defined by bootstrap-grid.css)
+@media (min-width: 576px) {
+    h1 {
+        font-size: 2.2rem;
+    }
+
+    #me1col {
+        display: none;
+    }
+
+    .w-sm-100 {
+        width: 100%;
+    }
+}
+// md (as defined by bootstrap-grid.css)
+@media (min-width: 768px) {
+    .w-md-100 {
+        width: 100%;
+    }
+}
+// lg (as defined by bootstrap-grid.css)
+@media (min-width: 992px) {
+    h1 {
+        font-size: 2.5rem;
+    }
+
+    .w-lg-80 {
+        width: 80%;
+    }
+}
+// xl (as defined by bootstrap-grid.css)
+@media (min-width: 1200px) {
+
+}
+// xxl (defined by me)
+@media (min-width: 1500px) {
+    //"col-2" means a column in a 2 column layout and is currently meant for a div.
+    .col-2-text p {
+        //this class is mean for a col-2 div that contains paragraphs (<p>) of text
+        padding-left: 50px;
+        padding-right: 50px;
+    }
+
+    .w-xxl-60 {
+        width: 60%;
+    }
+}
+
 body {
     background-color: lightgray;
 }
@@ -14,6 +83,14 @@ div.my-navbar {
     ul > li {
         display: inline-block;
     }
+}
+
+.nrLogo {
+    width: 75px;
+}
+
+div.myBodyContainer a {
+    color: #70abff;
 }
 
 div.subheader {
@@ -35,6 +112,12 @@ div.subheader {
     &:hover {
         text-decoration: none;
     }
+}
+
+// Slightly modified version of Bootstrap's .table
+.myTable {
+    color: #f8f9fa !important;
+    background-color: #555 !important;
 }
 
 // These are in addition to boostrap's sizing utility which only gives sizes for 25%, 50%, 75%, 100%

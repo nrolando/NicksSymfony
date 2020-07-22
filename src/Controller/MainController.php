@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Services\Strings;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -40,31 +41,26 @@ class MainController extends AbstractController
     /**
      * @Route("/coolpage/{name?}", name="coolpage")
      * @param Request $request
+     * @param Strings $stringsUtil
      * @return Response
      */
-    public function coolpage(Request $request) {
+    public function coolpage(Request $request, Strings $stringsUtil) {
         // Get the Symfony dump method from recipe "symfony/var-dumper". May already come bundled with symfony/skeleton as of Symfony 5.
         // composer require dump
         //dump($request);
 
         $name = $request->get("name");
-        $name = $this->my_mb_ucwords($name);
+        $name = $stringsUtil->my_mb_ucwords($name);
 
         return $this->render('home/coolpage.html.twig', [
             'name'  => $name
         ]);
     }
 
-    // How would I add this to some custom utility class that can be used throughout my application?
-    private function my_mb_ucwords($p_str) {
-        if(empty($p_str)) {
-            return $p_str;
-        }
-        // A little capitalization statement (using mb.. since mb_ucfirst() doesn't exist)
-        $words = explode(' ', $p_str);
-        for($i = 0; $i < count($words); $i++) {
-            $words[$i] = mb_strtoupper(mb_substr($words[$i], 0, 1)) . mb_strtolower(mb_substr($words[$i], 1));
-        }
-        return implode(' ', $words);
+    /**
+     * @Route("/portfolio", name="portfolio")
+     */
+    public function portfolio() {
+        return $this->render('home/portfolio.html.twig');
     }
 }
