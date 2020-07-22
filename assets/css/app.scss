@@ -60,10 +60,12 @@ $subheaderHeight: 47px;
 // xxl (defined by me)
 @media (min-width: 1500px) {
     //"col-2" means a column in a 2 column layout and is currently meant for a div.
-    .col-2-text p {
-        //this class is mean for a col-2 div that contains paragraphs (<p>) of text
-        padding-left: 50px;
-        padding-right: 50px;
+    .col-2-text {
+        p, h1, h2, h3 {
+            //this class is meant for a col-2 div that contains lots of text
+            padding-left: 50px;
+            padding-right: 50px;
+        }
     }
 
     .w-xxl-60 {
@@ -73,6 +75,14 @@ $subheaderHeight: 47px;
 
 body {
     background-color: lightgray;
+}
+
+h2 {
+    font-size: 1.75rem;
+}
+
+h3 {
+    font-size: 1.45rem;
 }
 
 div.my-navbar {

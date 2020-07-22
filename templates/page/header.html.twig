@@ -1,8 +1,9 @@
-<nav class="navbar navbar-expand-lg navbar-light bg-light py-0">
+<nav class="navbar navbar-expand-sm navbar-light bg-light py-0">
     <a class="navbar-brand" href="{{ path('home') }}">
         <img class="nrLogo" alt="NR Logo" src="{{ asset('build/images/NR_logo.png') }}" />
     </a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
 
@@ -12,31 +13,51 @@
                 <a class="nav-link" data-path="portfolio" href="{{ path('portfolio') }}">My Skillz</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" data-path="post.index" href="{{ path('post.index') }}">Posts</a>
+                <a class="nav-link" target="_blank" href="https://github.com/nrolando?tab=repositories">My Github</a>
             </li>
+            <!-- TEMPORARILY REMOVING SO YOU CAN TAKE THIS LIVE, THEN IMMEDIATELY TRY TO FIX AFTER
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Posts
+                </a>
+                <div class="dropdown-menu m-0" aria-labelledby="navbarDropdown">
+                    <a class="dropdown-item" data-path="post.index" href="{ { path('post.index') }}">View</a>
+                    <a class="dropdown-item" data-path="post.create" href="{ { path('post.create') }}">Create</a>
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item" data-path="post.show" href="{ { path('post.show', {id: '8'}) }}">My Fav</a>
+                </div>
+            </li>-->
             <!-- check out header_bu.html.twig for references to removed nav items "li.nav-item.dropdown" and "li.nav-item a.nav-link.disabled" -->
         </ul>
-        <ul class="navbar-nav ml-auto">
-            {% if app.user %}
+        <!-- ml-auto may not be needed on this below <ul> since the above <ul> mr-auto seems to push it all the way to the right -->
+        <!-- TO-DO: you may have to add padding-top/bottom: 7px to each <li> below to fix li sizing for mobile. you may also have to
+         remove the "/" li item so it's not added to the collapsed/mobile menu.. use margin/padding between the register & login li.
+          If you got this route and pixel f* it, youll probably have to re-adjust this every time something changes this header height.
+           TEMPORARILY REMOVING SO YOU CAN TAKE THIS LIVE, THEN IMMEDIATELY TRY TO FIX AFTER -->
+        <!--<ul class="navbar-nav">
+            { % if app.user %}
                 <li class="nav-item">
-                    <span>Hello, {{ app.user.username }}&nbsp;/&nbsp;</span>
+                    <span>Hello, { { app.user.username }}&nbsp;/&nbsp;</span>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link p-0" data-path="app_logout" href="{{ path('app_logout') }}">Logout</a>
+                    <a class="nav-link p-0" data-path="app_logout" href="{ { path('app_logout') }}">Logout</a>
                 </li>
-            {% else %}
+            { % else %}
                 <li class="nav-item">
-                    <a class="nav-link p-0" data-path="register" href="{{ path('register') }}">Register</a>
+                    <a class="nav-link p-0" data-path="register" href="{ { path('register') }}">Register</a>
                 </li>
                 <li class="nav-item">&nbsp;/&nbsp;</li>
                 <li class="nav-item">
-                    <a class="nav-link p-0" data-path="app_login" href="{{ path('app_login') }}">Login</a>
+                    <a class="nav-link p-0" data-path="app_login" href="{ { path('app_login') }}">Login</a>
                 </li>
-            {% endif %}
-        </ul>
+            { % endif %}
+        </ul>-->
     </div>
 </nav>
 <script type="application/javascript">
+    var mdScreenSizePx = 768;
+    var smScreenSizePx = 576;
+
     // Should get everything up to first ".", which should be conventional in parent/children route naming (e.g. post.show)
     let l_routeMatches = "{{ app.request.attributes.get('_route') }}".match('^[a-zA-Z0-9-_]+');
     if(l_routeMatches !== undefined && l_routeMatches !== null) {
@@ -46,9 +67,29 @@
             if(aPath !== undefined && aPath !== null) {
                 let aMatch = aPath.match(routeRegex);
                 if (aMatch !== undefined && aMatch !== null) {
-                    $(this).parent('li').addClass('active');
+                    $(this).parents('li').first().addClass('active');
                 }
             }
         });
     }
+
+    // This lovely code helps the bootstrap nav dropdown menu item show/hide on/off hover
+    $('li.dropdown').hover(
+        function(e) {
+            // Do not show on hover if in mobile state
+            if($(window).width() > smScreenSizePx) {
+                if (!$('.dropdown-menu').hasClass('show')) {
+                    $('.dropdown-toggle').click();
+                }
+            }
+        },
+        function(e) {
+            // Do not hide off hover if in mobile state
+            if($(window).width() > smScreenSizePx) {
+                if ($('.dropdown-menu').hasClass('show')) {
+                    $('.dropdown-toggle').click();
+                }
+            }
+        }
+    );
 </script>

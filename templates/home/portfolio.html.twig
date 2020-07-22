@@ -1,18 +1,53 @@
 {% extends('base.html.twig') %}
 
 {% block body %}
-    <h1>What yoo wanna kno?</h1>
-    <p>
-        ha deet deee
-    </p>
-    <p>
-        Still working on this.. ignore text below... and above &#128513;
-    </p>
-    <p>
-        I develop in Linux and Windows environments, and also have experience in the PHP frameworks Magento and Wordpress.
-        I Apache or NGINX web server software, and building frontend UI/UX with HTML5, CSS3 and SASS,
-        Javascript, jQuery, VueJS, and Bootstrap.
-
-        Thank you for checking out my website/portfolio!
-    </p>
+    <div>
+        <h1 class="text-center">I &#128150; Programming</h1>
+    </div>
+    <div class="row mt-5 mx-lg-5">
+        <div class="col-sm text-left col-2-text">
+            <p><a href="/uploads/ResumeNA.pdf" download>(Download my Resume!)</a></p>
+            <section>
+                <h3>Languages</h3>
+                <p>
+                    PHP, Javascript, C#, SQL, HTML(5)/CSS(3), Java, C++, Bash.
+                </p>
+                <h3>Frameworks & API</h3>
+                <p>
+                    Magento 1 & 2, Symfony, Wordpress, ASP.NET / .NET Core, PHPUnit, NUnit, cURL, REST, jQuery, VueJS, Classic ASP.
+                </p>
+                <h3>Software</h3>
+                <p>
+                    Linux and Windows OS, Docker, Apache, NGINX, NodeJS, AWS, IIS, SQL Server, MySQL, ElasticSearch, Redis,
+                    SCM (Git, Tortoise SVN, Google Code), Varnish, Gatling, Visual Studio, PHPStorm, Eclipse, NetBeans.
+                </p>
+            </section>
+            <h2><i>A Little More Background</i></h2>
+            <section>
+                <p>
+                    In the world of web development, my core languages are PHP and C# (with .NET). During the first two years
+                    of my career, I worked mostly with C# & ASP.NET with some Java JSF and PHP on the side. However, since then
+                    most of my profession has consisted of PHP development, however I love doing C# in my own time to stay
+                    current and skilled in this language, and development mobile apps and games in Unity3D with C# scripting.
+                    I have extensive experience in hosting web applications with Apache and NGINX web server software, and building
+                    frontend/user-interface with HTML5, CSS3 &amp; SASS, Javascript, jQuery, VueJS, and Bootstrap.
+                </p>
+                <p>
+                    You may notice in resume, that my B.S. is in Game and Simulation Programming. Yes, I went to school to become
+                    a game developer, but along the way I realized that web programming had a lot of similarities and that I
+                    really wanted to learn how to develop websites as well. So I started down my path of learning ASP.NET,
+                    PHP, and relational databases. I found I loved developing websites and web apps and after graduation I
+                    pursued this as a career and have never looked back! I still love developing games and do so as a
+                    hobby. I am currently learning 3D modeling in Blender, and developing games and applications in Unity 3D.
+                </p>
+                <p>
+                    Thank you for checking out my portfolio! Work history, examples, success stories and testimonials to
+                    come, so stay tuned &#x1F600;
+                </p>
+            </section>
+        </div>
+        <div id="me2col" class="col-sm text-center">
+            <img class="w-xxl-60 w-lg-80 w-sm-100" alt="Nick Rolando Web Developer" src="{{ asset('build/images/raisedBrow.png') }}" />
+        </div>
+    </div>
 {% endblock %}

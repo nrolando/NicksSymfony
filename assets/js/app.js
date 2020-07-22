@@ -16,6 +16,10 @@ const $ = require('jquery');
 // create global $ and jQuery variables (https://symfony.com/doc/current/frontend/encore/legacy-applications.html)
 global.$ = global.jQuery = $;
 
+https://symfony.com/doc/current/frontend/encore/bootstrap.html
+// the bootstrap module doesn't export/return anything
+require('bootstrap');
+
 //console.log('Hello Webpack Encore! Edit me in assets/js/app.js');
 
 $(document).ready(function() {
